@@ -117,9 +117,9 @@ def sum_neighbours_fun(string):
 print(sum_neighbours_fun(string_1))
 
 # Дан список, состоящий из строк. Отсортировать его по длине слов. Сначала должны идти длинные слова затем короткие.
-lst = ["a", "aaaa", "aa", "aaaaaaaaa", "aaa", "a"]
-lst.sort(reverse=True)
-print(lst)
+lst = ["qweasdsadqw", "adsfdsfedsaaaa", "aasda", "aaaasdsdsdaaaaa", "aasda", "a"]
+new_lst = sorted(lst, key=len, reverse=True)
+print(new_lst)
 
 # Дан список состоящий из слов. Отсортировать его по количеству вхождений буквы 'a'
 lst = ["kaaas", "kaa", "kaaaaaaa", "kaaaa", "kabbbbbbbbbbbbbbbbbbbbbbb"]
