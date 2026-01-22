@@ -115,3 +115,14 @@ def sum_neighbours_fun(string):
     return " ".join(map(str, new_lst))
 
 print(sum_neighbours_fun(string_1))
+
+# Дан список, состоящий из строк. Отсортировать его по длине слов. Сначала должны идти длинные слова затем короткие.
+lst = ["a", "aaaa", "aa", "aaaaaaaaa", "aaa", "a"]
+lst.sort(reverse=True)
+print(lst)
+
+# Дан список состоящий из слов. Отсортировать его по количеству вхождений буквы 'a'
+lst = ["kaaas", "kaa", "kaaaaaaa", "kaaaa", "kabbbbbbbbbbbbbbbbbbbbbbb"]
+new_lst = sorted(lst, key = lambda x: x.count("a"))
+print(new_lst)
+
