@@ -41,3 +41,13 @@ with open('flights.json', 'r', encoding='utf-8') as file:
 
     print(' '.join(flights_number))
     print(' '.join(departures_time))
+
+# Ведомость студентов, сдававших сессию, содержит ФИО и оценки по четырем предметам. Вывести список студентов, сдавших
+# сессию со средним баллом больше 7. Пример файла student_grades.json
+
+with open('graduates.json', 'r', encoding='utf-8') as file:
+    data = json.load(file)
+    avg = [sum(item["grades"]) / len(item["grades"]) for item in data if sum(item["grades"]) / len(item["grades"]) > 7]
+    names = [item["full_name"] for item in data if sum(item["grades"]) / len(item["grades"]) > 7]
+    for name in range(len(names)):
+        print(f"{names[name]} - средний балл: {avg[name]}")
