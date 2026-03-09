@@ -1,0 +1,149 @@
+1)
+CREATE TABLE "actors" (
+	"id"	INTEGER,
+	"age"	INTEGER,
+	"sex"	TEXT CHECK(sex = 'male' or sex = 'female'),
+	"country"	TEXT,
+	"name"	TEXT NOT NULL,
+	"last_name"	TEXT NOT NULL,
+	PRIMARY KEY("id" AUTOINCREMENT)
+);
+
+2)
+ALTER TABLE actors
+ADD COLUMN salary INTEGER
+
+3) Добавьте проверку, что age не может быть меньше 0. - НЕЛЬЗЯ СДЕЛАТЬ В SQLITE
+
+4) 
+ALTER TABLE actors
+DROP COLUMN salary
+
+5)
+INSERT INTO actors (name, last_name, age, sex, country) VALUES
+('Киану', 'Ривз', 59, 'male', 'Канада'),
+('Скарлетт', 'Йоханссон', 39, 'female', 'США'),
+('Леонардо', 'ДиКаприо', 49, 'male', 'США'),
+('Том', 'Харди', 46, 'male', 'Великобритания'),
+('Шарлиз', 'Терон', 48, 'female', 'ЮАР'),
+('Кристиан', 'Бэйл', 50, 'male', 'Великобритания'),
+('Анджелина', 'Джоли', 48, 'female', 'США'),
+('Райан', 'Гослинг', 43, 'male', 'Канада'),
+('Натали', 'Портман', 42, 'female', 'Израиль'),
+('Мэттью', 'Макконахи', 54, 'male', 'США'),
+('Эмма', 'Уотсон', 33, 'female', 'Великобритания'),
+('Джеки', 'Чан', 69, 'male', 'Китай'),
+('Николь', 'Кидман', 56, 'female', 'Австралия'),
+('Брэд', 'Питт', 60, 'male', 'США'),
+('Кейт', 'Бланшетт', 54, 'female', 'Австралия'),
+('Дензел', 'Вашингтон', 69, 'male', 'США'),
+('Джулия', 'Робертс', 56, 'female', 'США'),
+('Хоакин', 'Феникс', 49, 'male', 'Пуэрто-Рико'),
+('Энн', 'Хэтэуэй', 41, 'female', 'США'),
+('Идрис', 'Эльба', 51, 'male', 'Великобритания'),
+('Галь', 'Гадот', 38, 'female', 'Израиль'),
+('Рассел', 'Кроу', 59, 'male', 'Новая Зеландия'),
+('Сальма', 'Хайек', 57, 'female', 'Мексика'),
+('Джонни', 'Депп', 60, 'male', 'США'),
+('Мила', 'Кунис', 40, 'female', 'Украина'),
+('Джейсон', 'Стейтем', 56, 'male', 'Великобритания'),
+('Пенелопа', 'Крус', 49, 'female', 'Испания'),
+('Морган', 'Фриман', 86, 'male', 'США'),
+('Марион', 'Котийяр', 48, 'female', 'Франция'),
+('Адам', 'Драйвер', 40, 'male', 'США')
+
+6)
+INSERT INTO actors (name, last_name) VALUES
+('Тимоти', 'Шаламе'),
+('Аня', 'Тейлор-Джой'),
+('Мадс', 'Миккельсен'),
+('Люпита', 'Нионго'),
+('Роберт', 'Дауни-младший')
+
+7)
+UPDATE actors
+SET country = 'Unknown'
+Where country is NULL
+
+8)
+UPDATE actors
+SET age = age + 2
+where sex = 'female' and age > 40
+
+9)
+SELECT * from actors
+WHERE sex = 'female' and age < 35
+
+10)
+SELECT * from actors
+WHERE age is NOT NULL
+ORDER BY age
+LIMIT 5
+
+11)
+SELECT count(*), avg(age), min(age), max(age)
+from actors
+
+12)
+SELECT country from actors
+group by country
+having count(*) > 5 and count(*) < 10 
+
+13)
+SELECT sex, avg(age)
+from actors
+where sex is not null
+group by sex
+
+14)
+SELECT country, min(age)
+from actors
+where country is not null and age is not null
+group by country
+
+15)
+select DISTINCT country
+from actors
+where country != 'Unknown' and country NOT IN (
+SELECT DISTINCT country
+from actors
+where sex = 'female'
+)
+
+Допки:
+16)
+SELECT name, last_name, max(age), country
+from actors
+where age is not null
+group by country
+
+17)
+SELECT avg(age), country
+from actors
+group by country
+order by age desc
+limit 1
+
+18)
+SELECT name, last_name, country
+from actors
+where sex = 'male' 
+and country IN (
+	select DISTINCT country
+	from actors
+	where sex = 'female' and age > 50
+	)
+
+19)
+SELECT country, ROUND(100 * SUM(sex = 'male') / COUNT(*), 1) as процент_мужчин
+from actors
+where country != 'Unknown'
+GROUP by country
+order by процент_мужчин desc
+
+20)
+select * from actors
+where age in (SELECT age
+from actors
+group by age
+having count(age) > 2)
